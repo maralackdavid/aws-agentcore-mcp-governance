@@ -2,94 +2,99 @@
 
 [![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock_AgentCore-FF9900?logo=amazonaws)](https://aws.amazon.com/bedrock/)
 [![MCP](https://img.shields.io/badge/Protocol-MCP-green)](https://modelcontextprotocol.io/)
+[![Step Functions](https://img.shields.io/badge/AWS-Step_Functions-FF9900?logo=amazonaws)](https://aws.amazon.com/step-functions/)
 [![Framework](https://img.shields.io/badge/Methodology-PMI--CPMAI-blue)](https://www.pmi.org/)
 
 An enterprise agentic workflow architecture built on **Amazon Bedrock AgentCore** and **Model Context Protocol (MCP)** servers, featuring deterministic **Human-in-the-Loop (HITL)** governance via **AWS Step Functions**.
 
 ---
 
-## 1. Executive Business Case
-* **Problem**: Unconstrained AI agents risk executing unauthorized database writes or falling victim to prompt injection.
-* **Solution**: A hybrid agentic architecture that uses LLMs for dynamic planning while routing all high-risk write operations through deterministic HITL approval state machines.
-* **Outcome**: Achieved **100% authorization policy compliance** and zero unauthorized write executions during defensive security testing.
+## 1. CPMAI Phase I: Matching AI to Business Needs
+
+Following the **PMI Certified Professional in Managing AI (CPMAI) Phase I (Business Understanding)** methodology, this project evaluates the business feasibility and safety constraints of autonomous AI agents before enterprise deployment.
+
+### 1.1 Business Objective & ROI Feasibility
+* **Target Audience**: Enterprise Operations & Customer Support Operations.
+* **Problem Statement**: Multi-step operational workflows (e.g., refunds, account modifications, order updates) require manual representative handling, leading to high operational friction and resolution delays. However, granting unconstrained write access to AI models creates extreme financial and security risks from prompt injection or parameter hallucination.
+* **Projected Financial ROI**: Automating 40% of routine multi-step tasks while routing high-risk actions through deterministic human approval projects **\$1.2M in annual cost avoidance** and reduces average resolution time by 60%.
+
+### 1.2 Cognitive vs. Non-Cognitive Justification
+* **Why AI is Required (Probabilistic Need)**: Multi-step task planning, intent classification, and parameter extraction from unstructured customer interactions require probabilistic natural language processing that rigid, rule-based scripts cannot handle.
+* **Non-Cognitive Integration (Deterministic Boundary)**: State-changing database actions (refunds, cancellations, privilege grants) are explicitly **decoupled** from model execution. Bedrock AgentCore proposes tool parameters via Model Context Protocol (MCP), but an **AWS Step Functions state machine** deterministically enforces Human-in-the-Loop (HITL) approval before any database write is committed.
+
+### 1.3 AI Pattern Mapping
+* **Primary Pattern**: **Autonomous Systems / Goal-Driven Systems** (dynamic multi-step task decomposition and tool selection via MCP).
+* **Secondary Pattern**: **Conversational & Human Interaction** paired with **Patterns & Anomalies** (detecting unauthorized prompt injection attempts or parameter drift).
+
+### 1.4 DIKUW Pyramid Alignment
+* **Data (Base Facts)**: Unstructured customer support tickets, order records in DynamoDB, and transaction ledgers in Aurora.
+* **Information (Structured Schemas)**: Tool definitions and API contracts standardized using Pydantic JSON schemas exposed over Model Context Protocol (MCP) servers.
+* **Knowledge (Agentic Planning)**: Amazon Bedrock AgentCore mapping customer intents to dynamic tool execution plans.
+* **Understanding & Governance (HITL Determinism)**: AWS Step Functions risk-evaluation engine enforcing human authorization boundaries whenever tool risk profiles transition from Read-Only to High-Risk Write.
+
+### 1.5 CPMAI Go/No-Go Assessment (3x3 Feasibility Matrix)
+
+| Feasibility Pillar | Assessment Criteria | Status | Strategic Justification |
+| :--- | :--- | :---: | :--- |
+| **Business Feasibility** | Problem Definition | 🟢 **GO** | High operational cost with clear safety boundary requirements defined. |
+| | Sponsor Commitment | 🟢 **GO** | Operations leadership approves autonomous read-only tasks with mandatory HITL on writes. |
+| | Sufficient ROI | 🟢 **GO** | Projected \$1.2M annual savings with significant cycle-time reduction. |
+| **Data Feasibility** | Data Availability | 🟢 **GO** | Account, order, and ticket data accessible via secure microservice APIs. |
+| | Access & Security | 🟢 **GO** | Strict IAM role policies isolate read tools from write tools. |
+| | Data Quality | 🟢 **GO** | OpenAPI and MCP JSON schemas enforce strict input/output validation. |
+| **Execution Feasibility** | Technology & Skills | 🟢 **GO** | Bedrock AgentCore, MCP, and Step Functions provide mature infrastructure. |
+| | Implementation Timeline | 🟢 **GO** | Phased rollout: Read-only automated tools in Sprint 1; HITL writes in Sprint 2. |
+| | Operational Context | 🟢 **GO** | Integrates seamlessly into existing admin dashboards via API Gateway & Webhooks. |
+
+*Overall Assessment*: **ALL GREEN (GO)** — Project approved for technical implementation.
 
 ---
 
 ## 2. Target System Architecture
+
 ```mermaid
 graph TD
-    subgraph ClientLayer ["1. Client & Authentication Layer"]
-        User["User / Support Agent"]
-        IdP["Identity Provider (Cognito / Entra ID)"]
-    end
-
-    subgraph IngestionPipeline ["Async Document Ingestion Pipeline"]
-        S3Docs["Amazon S3 Bucket\n(Raw PDFs/Docs)"]
-        IngestLambda["AWS Lambda\n(Chunking & Metadata Parsing)"]
-        TitanEmbed["Amazon Bedrock\n(Titan Text Embeddings v2)"]
-    end
-
-    subgraph CoreOrchestration ["2. API & Orchestration Layer"]
+    subgraph ClientAndTrigger ["1. Client & Trigger Tier"]
+        AgentUser["Support Agent / System Event"]
         APIGW["AWS API Gateway"]
-        Orchestrator["AWS Lambda Orchestrator\n(Python / LangChain)"]
     end
 
-    subgraph SearchAndRetrieval ["3. Vector & Re-Ranking Engine"]
-        OpenSearch[("Amazon OpenSearch Serverless\n(Vector Engine + BM25)")]
-        ReRanker["Cohere Cross-Encoder Rerank\n(Amazon Bedrock)"]
+    subgraph AgenticOrchestration ["2. Agentic Core & MCP Layer"]
+        BedrockAgent["Amazon Bedrock AgentCore\n(Supervisor Agent)"]
+        MCPServer["Model Context Protocol (MCP) Server\n(AWS Fargate / Lambda)"]
     end
 
-    subgraph InferenceLayer ["4. Foundation Model Layer"]
-        BedrockLLM["Amazon Bedrock\n(Claude 3.5 Sonnet)"]
+    subgraph GovernanceAndHITL ["3. Security & Human-in-the-Loop Gating"]
+        ToolRouter{"Tool Risk Assessment\n(Read-Only vs High-Risk Write)"}
+        StepFunctions["AWS Step Functions\n(Deterministic HITL State Machine)"]
+        SNSApproval["AWS SNS / Admin Email Approval"]
     end
 
-    subgraph GovernanceAndTelemetry ["5. Telemetry & Security"]
-        IAMRBAC["AWS IAM RBAC Policy Engine\n(Least-Privilege Metadata Filters)"]
-        CloudWatch["Amazon CloudWatch\n(Token Spend & Latency)"]
+    subgraph ExecutionAndStorage ["4. Enterprise Data & Execution Tier"]
+        DynamoDB[("Amazon DynamoDB\n(Order / Ticket State)")]
+        AuroraDB[("Amazon Aurora PostgreSQL\n(Customer Accounts)")]
     end
 
-    %% Ingestion Flow
-    S3Docs -->|S3 Event Trigger| IngestLambda
-    IngestLambda -->|Generate Vector Embeddings| TitanEmbed
-    TitanEmbed -->|Store Vectors + IAM Metadata| OpenSearch
+    subgraph TelemetryAndAudit ["5. Telemetry & Governance Logging"]
+        CloudWatch["Amazon CloudWatch\n(Agent Action Logs & Cost Metrics)"]
+        AuditTrail["S3 Immutable Audit Bucket\n(Prompt Injection & Tool Traces)"]
+    end
 
-    %% Query Flow
-    User -->|1. Authenticate| IdP
-    IdP -->|2. Return JWT with Role Claims| User
-    User -->|3. Submit Query + JWT| APIGW
-    APIGW -->|4. Validate Token & Authorize| Orchestrator
-    Orchestrator -->|5. Extract Role & Attach IAM Filter| IAMRBAC
-    IAMRBAC -->|6. Enforce Least-Privilege Query| OpenSearch
-    OpenSearch -->|7. Return Authorized Candidate Chunks| ReRanker
-    ReRanker -->|8. Return Top-N Re-Ranked Chunks| Orchestrator
-    Orchestrator -->|9. Construct Prompt + Chunks| BedrockLLM
-    BedrockLLM -->|10. Synthesize Answer + Citation Links| Orchestrator
-    Orchestrator -->|11. Return Response| User
+    %% Execution Flow
+    AgentUser -->|1. Submit Task Request| APIGW
+    APIGW -->|2. Route to Supervisor| BedrockAgent
+    BedrockAgent -->|3. Query Available Tools via MCP| MCPServer
+    MCPServer -->|4. Propose Tool Execution| ToolRouter
 
-    %% Telemetry
-    Orchestrator -.->|Log Token Spend & Latency| CloudWatch
-```
+    %% Risk Decision Routing
+    ToolRouter -->|Low-Risk: Read-Only Query| DynamoDB
+    ToolRouter -->|High-Risk: Refund / Status Change| StepFunctions
 
----
+    %% HITL Approval Flow
+    StepFunctions -->|Pause & Send Approval Request| SNSApproval
+    SNSApproval -->|Human Approves Action| StepFunctions
+    StepFunctions -->|Execute Authorized Write| AuroraDB
+    ToolRouter -.->|Blocked / Prompt Injection Detected| AuditTrail
 
-## 3. Measured Benchmarks
-
-| Metric | Target SLA | Measured Value | Status |
-| :--- | :--- | :--- | :--- |
-| **Tool Execution Accuracy** | > 90% | **95.2%** | PASS |
-| **Prompt Injection Defense** | 100% Blocked | **100% Blocked** | PASS |
-| **HITL Gating Compliance** | 100% Enforced | **100% Enforced** | PASS |
-| **P95 Agent Response Time** | < 2.5s | **2.10s** | PASS |
-
----
-
-## 4. Key Repository Deliverables
-* [`docs/adrs/ADR-002-agentic-orchestration-vs-deterministic-state-machines.md`](./docs/adrs/ADR-002-agentic-orchestration-vs-deterministic-state-machines.md)
-* [`src/agents/agent_orchestrator.py`](./src/agents/agent_orchestrator.py)
-* [`tests/test_agent_security.py`](./tests/test_agent_security.py)
-
----
-
-## 5. Author & License
-* **Architect**: David Maralack, PMP, PMI-CPMAI
-* **License**: MIT
+    %% Logging
+    BedrockAgent -.->|Log Token Spend & Agent Trace| CloudWatch
