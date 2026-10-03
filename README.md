@@ -251,6 +251,3 @@ Benchmarked using a 100-scenario evaluation suite and automated CI/CD security g
 
 ---
 
-## 6. Author & License
-* **Architect**: David Maralack, PMP, PMI-CPMAI
-* **License**: MIT
