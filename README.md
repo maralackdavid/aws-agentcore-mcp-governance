@@ -12,7 +12,7 @@
   1. **Strategic Selection & Alignment**: Rigorous decision-filtering (The 95% Rule) and 3-Year Total Cost of Ownership (TCO) analysis.
   2. **Financial Value & ROI Governance**: Multi-stakeholder KPI framing, 4-component financial ROI modeling, and FinOps controls.
   3. **Cognitive Project Management for AI (CPMAI)**: A disciplined 6-phase lifecycle governing AI delivery from ideation to active portfolio scale.
-  4. **Agentic Tool Governance Engine**: A zero-trust technical implementation pairing **Amazon Bedrock AgentCore** multi-agent supervisors with **Model Context Protocol (MCP)** tool servers on AWS Fargate/Lambda, guarded by deterministic **AWS Step Functions** HITL state machines.
+  4. **Agentic Tool Governance Engine**: A zero-trust technical implementation pairing **Amazon Bedrock AgentCore** multi-agent supervisors with **Model Context Protocol (MCP)** tool servers on **AWS Fargate/Lambda**, guarded by deterministic **AWS Step Functions** HITL state machines.
 
 ---
 
