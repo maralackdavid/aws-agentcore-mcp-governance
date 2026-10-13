@@ -16,7 +16,51 @@
 
 ---
 
-## 1. CPMAI 6-Phase Project Lifecycle & Strategic Alignment
+## 1. Strategic Alignment & Solution Selection
+
+### 1.1 Probabilistic vs. Deterministic Task Filtering (The 95% Rule)
+Before committing capital, every enterprise operational task is evaluated against structural characteristics:
+* **Predictability**: Tasks with identical inputs yielding identical outputs belong in rules engines.
+* **The 95% Rule**: If a business rules engine or decision tree covers 95% of operational cases, build the rules engine. AI agents are deployed strictly when dynamic multi-step reasoning, intent classification, multi-tool selection, and unstructured request parsing are required.
+* **Decoupled Architecture**: Probabilistic agents *propose* actions; deterministic AWS Step Functions state machines *enforce* execution boundaries.
+
+### 1.2 3-Year Build vs. Buy vs. Partner TCO Model
+
+| Cost Element | Option A: Build In-House | Option B: Buy Off-the-Shelf | Option C: Partner (Recommended) |
+| :--- | :--- | :--- | :--- |
+| **Upfront / Co-Dev Cost** | $1,300,000 | $140,000 | $620,000 |
+| **Annual Operating Opex (3 Yrs)** | $550,000 ($183K/yr) | $1,280,000 ($426K/yr) | $270,000 ($90K/yr) |
+| **Hidden Unguided Risk Loss** | $0 | $380,000 (False executions) | $0 (Deterministic HITL) |
+| **Total 3-Year TCO** | **$1,850,000** | **$1,800,000** (Adjusted) | **$890,000** |
+| **Time-to-Market** | 12 Months (Misses Window) | 2 Months | 4 Months (Meets Window) |
+| **Enterprise IP Ownership** | 100% Owned | Vendor Owned | **100% Contractually Retained** |
+
+### 1.3 Active Portfolio Governance
+Initiatives are classified into evidence-backed operational buckets:
+* **Scale**: Proven risk avoidance, high operational adoption, strong data flywheel.
+* **Pause**: Temporarily suspended with strict 30/60-day condition criteria (e.g., awaiting MCP tool schema definition or sponsor re-alignment).
+* **Terminate**: Unpromising projects halted immediately, with remaining capital redeployed to high-performing initiatives.
+
+---
+
+
+## 2. Value Demonstration & Financial Governance
+
+### 2.1 Executive Stakeholder KPI Alignment Matrix
+
+| Executive Role | Key Performance Indicators (KPIs) | Strategic Focus & Value Deliverable |
+| :--- | :--- | :--- |
+| **CFO** | Net Annual Cost Avoidance ($1.407M/yr), 2-Yr ROI (238%), Payback (~7 Mos) | EBITDA protection, risk-adjusted capital efficiency, defensible ROI |
+| **COO / Operations** | Process Cycle Time (-65%), Exception Handling Rate, Workflow Throughput | Operational speed, human-in-the-loop efficiency, error elimination |
+| **CIO / ITSM** | Tool Accuracy (95.2%), Pipeline Uptime (99.5%), Integration Health | System reliability, API Gateway scalability, infrastructure health |
+| **CISO / Risk** | Prompt Injection Interception (100%), HITL Policy Compliance (100%), Audit Coverage (100%) | Zero-trust AI security, compliance auditability, privilege escalation prevention |
+
+### 2.2 Comprehensive Financial ROI Equation
+
+$$\text{Net Benefit} = (\text{Direct Avoidance} [\$1.20\text{M}] + \text{Indirect Gains} [\$180\text{K}] + \text{Productivity} [\$240\text{K}]) - \text{Operating Opex} [\$213\text{K}] = \mathbf{\$1,407,000/\text{year}}$$
+
+---
+## 3. CPMAI 6-Phase Project Lifecycle & Strategic Alignment
 
 Execution follows the **Cognitive Project Management for AI (CPMAI)** methodology, embedding Module 4 strategy and Module 5 value governance into each phase gate:
 
@@ -77,50 +121,6 @@ graph TD
 * **Transition Strategy**: Execute a **Phased Rollout by Department/Workflow** with pre-defined rollback triggers to limit operational blast radius.
 * **Controls**: Track 4 **Leading Indicators** (95.2% Tool Accuracy, 99.5% Pipeline Uptime, Executive Sponsor Engagement, 100% Audit Trace Coverage) and enforce FinOps controls (Bedrock provisioned throughput auto-scaling, 90-day artifact retention).
 * **Gate 4 Milestone**: Active Portfolio Governance classification (*Scale*, *Pause*, or *Terminate*).
-
----
-
-## 2. Strategic Alignment & Solution Selection
-
-### 2.1 Probabilistic vs. Deterministic Task Filtering (The 95% Rule)
-Before committing capital, every enterprise operational task is evaluated against structural characteristics:
-* **Predictability**: Tasks with identical inputs yielding identical outputs belong in rules engines.
-* **The 95% Rule**: If a business rules engine or decision tree covers 95% of operational cases, build the rules engine. AI agents are deployed strictly when dynamic multi-step reasoning, intent classification, multi-tool selection, and unstructured request parsing are required.
-* **Decoupled Architecture**: Probabilistic agents *propose* actions; deterministic AWS Step Functions state machines *enforce* execution boundaries.
-
-### 2.2 3-Year Build vs. Buy vs. Partner TCO Model
-
-| Cost Element | Option A: Build In-House | Option B: Buy Off-the-Shelf | Option C: Partner (Recommended) |
-| :--- | :--- | :--- | :--- |
-| **Upfront / Co-Dev Cost** | $1,300,000 | $140,000 | $620,000 |
-| **Annual Operating Opex (3 Yrs)** | $550,000 ($183K/yr) | $1,280,000 ($426K/yr) | $270,000 ($90K/yr) |
-| **Hidden Unguided Risk Loss** | $0 | $380,000 (False executions) | $0 (Deterministic HITL) |
-| **Total 3-Year TCO** | **$1,850,000** | **$1,800,000** (Adjusted) | **$890,000** |
-| **Time-to-Market** | 12 Months (Misses Window) | 2 Months | 4 Months (Meets Window) |
-| **Enterprise IP Ownership** | 100% Owned | Vendor Owned | **100% Contractually Retained** |
-
-### 2.3 Active Portfolio Governance
-Initiatives are classified into evidence-backed operational buckets:
-* **Scale**: Proven risk avoidance, high operational adoption, strong data flywheel.
-* **Pause**: Temporarily suspended with strict 30/60-day condition criteria (e.g., awaiting MCP tool schema definition or sponsor re-alignment).
-* **Terminate**: Unpromising projects halted immediately, with remaining capital redeployed to high-performing initiatives.
-
----
-
-## 3. Value Demonstration & Financial Governance
-
-### 3.1 Executive Stakeholder KPI Alignment Matrix
-
-| Executive Role | Key Performance Indicators (KPIs) | Strategic Focus & Value Deliverable |
-| :--- | :--- | :--- |
-| **CFO** | Net Annual Cost Avoidance ($1.407M/yr), 2-Yr ROI (238%), Payback (~7 Mos) | EBITDA protection, risk-adjusted capital efficiency, defensible ROI |
-| **COO / Operations** | Process Cycle Time (-65%), Exception Handling Rate, Workflow Throughput | Operational speed, human-in-the-loop efficiency, error elimination |
-| **CIO / ITSM** | Tool Accuracy (95.2%), Pipeline Uptime (99.5%), Integration Health | System reliability, API Gateway scalability, infrastructure health |
-| **CISO / Risk** | Prompt Injection Interception (100%), HITL Policy Compliance (100%), Audit Coverage (100%) | Zero-trust AI security, compliance auditability, privilege escalation prevention |
-
-### 3.2 Comprehensive Financial ROI Equation
-
-$$\text{Net Benefit} = (\text{Direct Avoidance} [\$1.20\text{M}] + \text{Indirect Gains} [\$180\text{K}] + \text{Productivity} [\$240\text{K}]) - \text{Operating Opex} [\$213\text{K}] = \mathbf{\$1,407,000/\text{year}}$$
 
 ---
 
