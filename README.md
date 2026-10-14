@@ -65,20 +65,6 @@ $$\text{Net Benefit} = (\text{Direct Avoidance} [\$1.20\text{M}] + \text{Indirec
 
 Execution follows the **Cognitive Project Management for AI (CPMAI)** methodology, embedding Module 4 strategy and Module 5 value governance into each phase gate:
 
-```mermaid
-graph TD
-    subgraph CPMAI Phase Gates & Strategic Governance
-        P1[Phase I: Business Understanding] -->|Gate 1: Go/No-Go| P2[Phase II: Data Understanding]
-        P2 -->|Gate 2: Security & Risk Approval| P3[Phase III: Data Preparation]
-        P3 --> P4[Phase IV: Model & Arch Development]
-        P4 --> P5[Phase V: Model & Value Evaluation]
-        P5 -->|Gate 3: ROI & SLA Sign-off| P6[Phase VI: Operationalization]
-        P6 -->|Gate 4: Scale/Pause/Terminate| GOV[Active Portfolio Governance]
-    end
-```
-
-### Phase-by-Phase Execution & Governance Matrix
-
 #### Phase I: Business Understanding & Strategic Selection
 * **CPMAI Objective**: Define the operational problem, establish cognitive project goals, and evaluate solution feasibility across business, data, and execution pillars.
 * **Selection Integration**:
